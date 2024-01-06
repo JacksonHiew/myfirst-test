@@ -24,6 +24,18 @@ class _EditScreenState extends State<EditScreen> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
 
+  String _computeTitle() {
+    if (widget.viewMode == true) {
+      return "View Note";
+    } else if (widget.note == null) {
+      return "Add new Note";
+    } else if (widget.note != null) {
+      return "Edit Note";
+    }
+
+    return "";
+  }
+
   Future<void> _saveNote() async {
     CollectionReference ref = FirebaseFirestore.instance
         .collection('users')
@@ -67,8 +79,11 @@ class _EditScreenState extends State<EditScreen> {
       appBar: AppBar(
         leading: Container(),
         centerTitle: true,
-        title: const Text('App Bar Title'),
+        title: Text(
+          _computeTitle(),
+        ),
         actions: [
+          if (widget.viewMode != true)
           IconButton(
               icon: const Icon(
                 Icons.check_circle,
