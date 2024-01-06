@@ -89,7 +89,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   title: Text(note.title),
-                  subtitle: Text(note.content),
+                  subtitle:
+                      value.expanded ? Text(note.content) : const SizedBox(),
                   onTap: () {},
                   onLongPress: () {},
                 );
