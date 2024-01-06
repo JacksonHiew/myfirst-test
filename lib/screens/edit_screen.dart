@@ -91,6 +91,7 @@ class _EditScreenState extends State<EditScreen> {
               ),
               onPressed: () async {
                 await _saveNote();
+                context.router.pop();
               },
             ),
           IconButton(
@@ -99,6 +100,7 @@ class _EditScreenState extends State<EditScreen> {
               size: 30,
             ),
             onPressed: () {
+              context.router.pop();
             },
           ),
         ],
