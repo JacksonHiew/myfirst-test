@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:map_exam/common/models/models.dart';
@@ -9,6 +10,15 @@ import 'package:provider/provider.dart';
 @RoutePage()
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  Future<void> _deleteNote(String id) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(Global.authState.userData!.uid)
+        .collection('notes')
+        .doc(id)
+        .delete();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +95,9 @@ class HomeScreen extends StatelessWidget {
                                   Icons.delete,
                                   color: Colors.blue,
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  _deleteNote(note.id);
+                                },
                               ),
                             ],
                           ),
