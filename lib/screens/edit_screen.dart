@@ -84,7 +84,7 @@ class _EditScreenState extends State<EditScreen> {
         ),
         actions: [
           if (widget.viewMode != true)
-          IconButton(
+            IconButton(
               icon: const Icon(
                 Icons.check_circle,
                 size: 30,
@@ -94,10 +94,10 @@ class _EditScreenState extends State<EditScreen> {
               },
             ),
           IconButton(
-              icon: const Icon(
-                Icons.cancel_sharp,
-                size: 30,
-              ),
+            icon: const Icon(
+              Icons.cancel_sharp,
+              size: 30,
+            ),
             onPressed: () {
             },
           ),
@@ -111,6 +111,7 @@ class _EditScreenState extends State<EditScreen> {
               controller: _titleController,
               initialValue: null,
               enabled: true,
+              readOnly: widget.viewMode == true,
               decoration: const InputDecoration(
                 hintText: 'Type the title here',
               ),
@@ -121,15 +122,17 @@ class _EditScreenState extends State<EditScreen> {
             ),
             Expanded(
               child: TextFormField(
-                  controller: _descriptionController,
-                  enabled: true,
-                  initialValue: null,
-                  maxLines: null,
-                  expands: true,
-                  decoration: const InputDecoration(
-                    hintText: 'Type the description',
-                  ),
-                  onChanged: (value) {}),
+                controller: _descriptionController,
+                enabled: true,
+                readOnly: widget.viewMode == true,
+                initialValue: null,
+                maxLines: null,
+                expands: true,
+                decoration: const InputDecoration(
+                  hintText: 'Type the description',
+                ),
+                onChanged: (value) {},
+              ),
             ),
           ],
         ),
