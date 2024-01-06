@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:map_exam/common/models/models.dart';
 import 'package:map_exam/common/router/router.gr.dart';
 import 'package:map_exam/global.dart';
 
@@ -18,6 +20,39 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
 
+  void _updateAuthState(UserCredential userCredential) {
+    Global.authState.updateAuthData(
+      userCredential.credential,
+    );
+
+    Global.authState.updateUserData(
+      userCredential.user,
+    );
+
+    Global.authState.updateAdditionalData(
+      userCredential.additionalUserInfo,
+    );
+  }
+
+  void _initFirestoreSteam() {
+    Global.noteStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(Global.authState.userData!.uid)
+        .collection('notes')
+        .snapshots()
+        .listen(
+      (QuerySnapshot<Map<String, dynamic>> snapshot) {
+        List<Note> notes = snapshot.docs
+            .map(
+              (e) => Note.fromJson(e.data()),
+            )
+            .toList();
+
+        Global.noteProvider.updateNotes(notes);
+      },
+    );
+  }
+
   Future<void> _login() async {
     if (_isLoading) {
       return;
@@ -33,20 +68,22 @@ class _LoginScreenState extends State<LoginScreen> {
         password: _passwordController.text,
       );
 
-      Global.authState.updateAuthData(
-        response.credential,
-      );
-
-      Global.authState.updateUserData(
-        response.user,
-      );
-
-      Global.authState.updateAdditionalData(
-        response.additionalUserInfo,
-      );
+      _updateAuthState(response);
+      _initFirestoreSteam();
 
       context.router.replace(
         const HomeScreenRoute(),
+      );
+
+      Future.delayed(
+        const Duration(
+          milliseconds: 300,
+        ),
+        () {
+          setState(() {
+            _isLoading = false;
+          });
+        },
       );
     } catch (e) {
       Fluttertoast.showToast(

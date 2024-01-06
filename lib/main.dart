@@ -29,6 +29,7 @@ class _AppState extends State<App> {
       title: 'myFirst',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        useMaterial3: false,
       ),
       debugShowCheckedModeBanner: false,
       routerConfig: Global.appRouter!.config(),

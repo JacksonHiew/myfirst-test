@@ -1,16 +1,20 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:map_exam/common/providers/note_provider.dart';
 import 'package:map_exam/common/providers/providers.dart';
 import 'package:map_exam/common/router/router.dart';
 import 'package:map_exam/firebase_options.dart';
 
 class Global {
   static AuthStateProvider authState = AuthStateProvider();
+
+  static NoteProvider noteProvider = NoteProvider();
 
   static AppRouter? appRouter;
 
@@ -19,6 +23,8 @@ class Global {
   static late GlobalKey<NavigatorState> appKey;
 
   static bool isLoaderActive = false;
+
+  static StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? noteStream;
 
   static Future init() async {
     WidgetsFlutterBinding.ensureInitialized();
