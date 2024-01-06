@@ -44,7 +44,10 @@ class _LoginScreenState extends State<LoginScreen> {
       (QuerySnapshot<Map<String, dynamic>> snapshot) {
         List<Note> notes = snapshot.docs
             .map(
-              (e) => Note.fromJson(e.data()),
+              (e) => Note.fromJson({
+                ...e.data(),
+                "id": e.id,
+              }),
             )
             .toList();
 

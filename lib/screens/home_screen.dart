@@ -69,30 +69,35 @@ class HomeScreen extends StatelessWidget {
                 Note note = value.notes[index];
 
                 return ListTile(
-                  trailing: SizedBox(
-                    width: 110.0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit, color: Colors.blue),
-                          onPressed: () {},
-                        ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.delete,
-                            color: Colors.blue,
+                  trailing: value.showingTool == note.id
+                      ? SizedBox(
+                          width: 110.0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                icon:
+                                    const Icon(Icons.edit, color: Colors.blue),
+                                onPressed: () {},
+                              ),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: Colors.blue,
+                                ),
+                                onPressed: () {},
+                              ),
+                            ],
                           ),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                  ),
+                        )
+                      : const SizedBox(),
                   title: Text(note.title),
                   subtitle:
                       value.expanded ? Text(note.content) : const SizedBox(),
                   onTap: () {},
-                  onLongPress: () {},
+                  onLongPress: () {
+                    value.toggleToolVisibility(note.id);
+                  },
                 );
               },
             );
