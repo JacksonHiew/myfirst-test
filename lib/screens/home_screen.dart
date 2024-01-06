@@ -4,6 +4,7 @@ import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:map_exam/common/models/models.dart';
 import 'package:map_exam/common/providers/note_provider.dart';
+import 'package:map_exam/common/router/router.gr.dart';
 import 'package:map_exam/global.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,6 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('My Notes'),
-        leading: const SizedBox(),
         elevation: 1,
         actions: [
           CircleAvatar(
@@ -88,7 +88,13 @@ class HomeScreen extends StatelessWidget {
                               IconButton(
                                 icon:
                                     const Icon(Icons.edit, color: Colors.blue),
-                                onPressed: () {},
+                                onPressed: () {
+                                  context.router.push(
+                                    EditScreenRoute(
+                                      note: note,
+                                    ),
+                                  );
+                                },
                               ),
                               IconButton(
                                 icon: const Icon(
@@ -106,7 +112,14 @@ class HomeScreen extends StatelessWidget {
                   title: Text(note.title),
                   subtitle:
                       value.expanded ? Text(note.content) : const SizedBox(),
-                  onTap: () {},
+                  onTap: () {
+                    context.router.push(
+                      EditScreenRoute(
+                        note: note,
+                        viewMode: true,
+                      ),
+                    );
+                  },
                   onLongPress: () {
                     value.toggleToolVisibility(note.id);
                   },
@@ -124,6 +137,7 @@ class HomeScreen extends StatelessWidget {
             child: Consumer<NoteProvider>(
               builder: (context, value, child) {
                 return FloatingActionButton(
+                  heroTag: "Tag1",
                   child: value.expanded
                       ? const Icon(Icons.unfold_less)
                       : const Icon(Icons.menu),
@@ -136,9 +150,16 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           FloatingActionButton(
+            heroTag: "Tag2",
             child: const Icon(Icons.add),
             tooltip: 'Add a new note',
-            onPressed: () {},
+            onPressed: () {
+              context.router.push(
+                EditScreenRoute(
+                  note: null,
+                ),
+              );
+            },
           ),
         ],
       ),

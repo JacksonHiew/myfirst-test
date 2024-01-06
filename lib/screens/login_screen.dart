@@ -77,17 +77,6 @@ class _LoginScreenState extends State<LoginScreen> {
       context.router.replace(
         const HomeScreenRoute(),
       );
-
-      Future.delayed(
-        const Duration(
-          milliseconds: 300,
-        ),
-        () {
-          setState(() {
-            _isLoading = false;
-          });
-        },
-      );
     } catch (e) {
       Fluttertoast.showToast(
         msg: "User not found or invalid credentials.",

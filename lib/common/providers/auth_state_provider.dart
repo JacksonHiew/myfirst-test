@@ -10,7 +10,7 @@ class AuthStateProvider extends ChangeNotifier {
   User? get userData => _userData;
   AdditionalUserInfo? get additionalData => _additionalData;
 
-  bool get isLoggedIn => _authData != null;
+  bool get isLoggedIn => _userData != null;
 
   void updateAuthData(AuthCredential? data) {
     _authData = data;

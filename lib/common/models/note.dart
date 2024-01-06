@@ -20,4 +20,9 @@ class Note {
         "title": title,
         "content": content,
       };
+
+  Map<String, dynamic> toJsonWithoutId() => {
+        "title": title,
+        "content": content,
+      };
 }

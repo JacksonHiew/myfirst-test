@@ -9,6 +9,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i4;
+import 'package:flutter/material.dart' as _i5;
+import 'package:map_exam/common/models/models.dart' as _i6;
 import 'package:map_exam/screens/edit_screen.dart' as _i1;
 import 'package:map_exam/screens/home_screen.dart' as _i2;
 import 'package:map_exam/screens/login_screen.dart' as _i3;
@@ -19,9 +21,15 @@ abstract class $AppRouter extends _i4.RootStackRouter {
   @override
   final Map<String, _i4.PageFactory> pagesMap = {
     EditScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<EditScreenRouteArgs>(
+          orElse: () => const EditScreenRouteArgs());
       return _i4.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i1.EditScreen(),
+        child: _i1.EditScreen(
+          key: args.key,
+          note: args.note,
+          viewMode: args.viewMode,
+        ),
       );
     },
     HomeScreenRoute.name: (routeData) {
@@ -41,16 +49,45 @@ abstract class $AppRouter extends _i4.RootStackRouter {
 
 /// generated route for
 /// [_i1.EditScreen]
-class EditScreenRoute extends _i4.PageRouteInfo<void> {
-  const EditScreenRoute({List<_i4.PageRouteInfo>? children})
-      : super(
+class EditScreenRoute extends _i4.PageRouteInfo<EditScreenRouteArgs> {
+  EditScreenRoute({
+    _i5.Key? key,
+    _i6.Note? note,
+    bool? viewMode = false,
+    List<_i4.PageRouteInfo>? children,
+  }) : super(
           EditScreenRoute.name,
+          args: EditScreenRouteArgs(
+            key: key,
+            note: note,
+            viewMode: viewMode,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'EditScreenRoute';
 
-  static const _i4.PageInfo<void> page = _i4.PageInfo<void>(name);
+  static const _i4.PageInfo<EditScreenRouteArgs> page =
+      _i4.PageInfo<EditScreenRouteArgs>(name);
+}
+
+class EditScreenRouteArgs {
+  const EditScreenRouteArgs({
+    this.key,
+    this.note,
+    this.viewMode = false,
+  });
+
+  final _i5.Key? key;
+
+  final _i6.Note? note;
+
+  final bool? viewMode;
+
+  @override
+  String toString() {
+    return 'EditScreenRouteArgs{key: $key, note: $note, viewMode: $viewMode}';
+  }
 }
 
 /// generated route for

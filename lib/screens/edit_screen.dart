@@ -1,9 +1,20 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:map_exam/common/models/models.dart';
+import 'package:map_exam/global.dart';
 
 @RoutePage()
 class EditScreen extends StatefulWidget {
-  const EditScreen({Key? key}) : super(key: key);
+  const EditScreen({
+    Key? key,
+    this.note,
+    this.viewMode = false,
+  }) : super(key: key);
+
+  final Note? note;
+  final bool? viewMode;
 
   @override
   State<EditScreen> createState() => _EditScreenState();
@@ -12,6 +23,43 @@ class EditScreen extends StatefulWidget {
 class _EditScreenState extends State<EditScreen> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+
+  Future<void> _saveNote() async {
+    CollectionReference ref = FirebaseFirestore.instance
+        .collection('users')
+        .doc(Global.authState.userData!.uid)
+        .collection('notes');
+
+    if (widget.note == null) {
+      ref.add(
+        Note(
+          id: widget.note?.id,
+          title: _titleController.text,
+          content: _descriptionController.text,
+        ).toJsonWithoutId(),
+      );
+    } else {
+      ref.doc(widget.note?.id).update(
+            Note(
+              id: widget.note?.id,
+              title: _titleController.text,
+              content: _descriptionController.text,
+            ).toJsonWithoutId(),
+          );
+    }
+
+    Fluttertoast.showToast(
+      msg: "Note ${widget.note == null ? 'Created' : 'Updated'}",
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _titleController.text = widget.note?.title ?? "";
+    _descriptionController.text = widget.note?.content ?? "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +74,18 @@ class _EditScreenState extends State<EditScreen> {
                 Icons.check_circle,
                 size: 30,
               ),
-              onPressed: () {}),
+              onPressed: () async {
+                await _saveNote();
+              },
+            ),
           IconButton(
               icon: const Icon(
                 Icons.cancel_sharp,
                 size: 30,
               ),
-              onPressed: () {}),
+            onPressed: () {
+            },
+          ),
         ],
       ),
       body: Container(
