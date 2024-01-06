@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "444443071683",
+    "project_id": "myfirst-assessment-test",
+    "storage_bucket": "myfirst-assessment-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444443071683:android:c5c63be9c1035b8349be76",
+        "android_client_info": {
+          "package_name": "com.example.map_exam"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4xhn5cn0afJ67GT6Te7DCeHMZ7y6ibo0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
